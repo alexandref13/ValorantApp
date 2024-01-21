@@ -1,6 +1,6 @@
 package br.com.ale.valorantapp.models
 
-data class DataModel(
+data class AgentsModel(
     val abilities: List<AbilityModel>,
     val assetPath: String,
     val background: String,

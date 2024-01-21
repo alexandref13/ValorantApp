@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,12 +20,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import br.com.ale.valorantapp.models.AgentsModel
 import br.com.ale.valorantapp.ui.theme.BlueDark
 import br.com.ale.valorantapp.ui.theme.typography
 import coil.compose.AsyncImage
 
 @Composable
-fun AgentItem() {
+fun AgentItem(agent: AgentsModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,19 +46,19 @@ fun AgentItem() {
             horizontalArrangement = Arrangement.Center
         ) {
             AsyncImage(
-                model = "https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png",
+                model = agent.displayIcon,
                 contentDescription = "Agent Image",
                 modifier = Modifier.size(52.dp)
             )
-
+            Spacer(modifier = Modifier.width(8.dp))
             Column(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text("Chamber", style = typography.bodyLarge.copy(color = Color.White))
+                Text(agent.displayName, style = typography.bodyLarge.copy(color = Color.White))
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    "Well-dressed and well-armed, French weapons designer Chamber expels aggressors with deadly precision. He leverages his custom arsenal to hold the line and pick off enemies from afar, with a contingency built for every plan.",
+                    agent.description,
                     textAlign = TextAlign.Justify,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,

@@ -5,6 +5,6 @@ import br.com.ale.valorantapp.services.ValorantService
 
 class ValorantRepositoryImp(private val valorantService: ValorantService) : ValorantRepository {
     override suspend fun getAgents(): ValorantModel {
-        return valorantService.getAgents();
+        return valorantService.getAgents()
     }
 }
