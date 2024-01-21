@@ -20,12 +20,22 @@ fun AgentsListScreen(agentsViewModel: AgentViewModel = koinViewModel()) {
         agentsViewModel.fetchAgents()
     }
 
-    val agents = agentsViewModel.agent.collectAsState().value
+    LaunchedEffect(agentsViewModel.searchValue.value) {
+        agentsViewModel.filterAgents()
+    }
+
+    val agents = agentsViewModel.filteredAgents.collectAsState().value
+    val searchValue = agentsViewModel.searchValue
 
     Surface(modifier = Modifier.fillMaxSize(), color = Gray300) {
         Column {
             Header()
-            CustomTextField()
+            CustomTextField(
+                value = searchValue.value,
+                onValueChange = { value ->
+                    searchValue.value = value
+                },
+            )
             Content(agents)
         }
     }
