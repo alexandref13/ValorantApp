@@ -5,14 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.ale.valorantapp.models.AgentDetailsModel
+import br.com.ale.valorantapp.models.AgentsModel
 import br.com.ale.valorantapp.repositories.ValorantRepository
 import kotlinx.coroutines.launch
 
 class AgentDetailsViewModel(private val valorantRepository: ValorantRepository) : ViewModel() {
 
-    private val _agent =  MutableLiveData<AgentDetailsModel>()
-    val agent: LiveData<AgentDetailsModel> = _agent
+    private val _agent =  MutableLiveData<AgentsModel>()
+    val agent: LiveData<AgentsModel> = _agent
     fun fetchAgentById() {
         viewModelScope.launch {
             try {
@@ -21,11 +21,8 @@ class AgentDetailsViewModel(private val valorantRepository: ValorantRepository) 
 
                 _agent.value = response
 
-                Log.i("AGENTE", _agent.value!!.data.displayName)
-                Log.i("AGENTE", "aq")
-                Log.i("AGENTE", response.data.displayName)
             } catch (e: Exception) {
-                Log.d("EXC", "FetchAgents: ${e.message.toString()}")
+                Log.d("EXC", "FetchAgentsById: ${e.message.toString()}")
             }
         }
     }

@@ -27,10 +27,12 @@ class MainActivity : ComponentActivity() {
 fun Navigation() {
     val navController = rememberNavController()
     NavHost(
-        navController = navController, startDestination = Routes.AGENT_DETAILS
+        navController = navController, startDestination = Routes.AGENTS_LIST
     ) {
-        composable(Routes.AGENTS_LIST, ) {
-            AgentsListScreen(navController = navController)
+        composable(Routes.AGENTS_LIST) {
+            AgentsListScreen(onNavigate = {
+                navController.navigate(it.route)
+            })
         }
         composable(Routes.AGENT_DETAILS) {
             AgentDetailsScreen()

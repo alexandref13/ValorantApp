@@ -23,12 +23,16 @@ class AgentViewModel(private val valorantRepository: ValorantRepository) : ViewM
     private var _searchValue = mutableStateOf(TextFieldValue(""))
     val searchValue: MutableState<TextFieldValue> = _searchValue
 
+
     fun fetchAgents() {
         viewModelScope.launch {
             try {
                 val response = valorantRepository.getAgents()
-                _agents.value = response.data
-                _filteredAgents.value = response.data
+
+                Log.i("RESPONSE_GET_AGENTS", "AQ")
+
+                _agents.value = response
+                _filteredAgents.value = response
             } catch (e: Exception) {
                 Log.d("EXC", "FetchAgents: ${e.message.toString()}")
             }

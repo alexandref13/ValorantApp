@@ -26,11 +26,12 @@ fun AgentDetailsScreen(agentDetailsViewModel: AgentDetailsViewModel = koinViewMo
             if(agent == null){
                 return@Column Text("Teste")
             } else {
-                return@Column  Text(agent!!.data.displayName)
+                return@Column  Text(agent!!.displayName)
             }
         }
     }
 }
+
 
 @Preview
 @Composable
