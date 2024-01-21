@@ -1,6 +1,7 @@
 package br.com.ale.valorantapp.ui.screens.agentsList.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,7 +27,7 @@ import br.com.ale.valorantapp.ui.theme.typography
 import coil.compose.AsyncImage
 
 @Composable
-fun AgentItem(agent: AgentsModel) {
+fun AgentItem(agent: AgentsModel,  onClickItem: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,7 +40,9 @@ fun AgentItem(agent: AgentsModel) {
                     bottomEnd = 8.dp,
                     bottomStart = 8.dp
                 )
-            )
+            ).clickable{
+                onClickItem()
+            }
     ) {
         Row(
             modifier = Modifier.padding(16.dp),

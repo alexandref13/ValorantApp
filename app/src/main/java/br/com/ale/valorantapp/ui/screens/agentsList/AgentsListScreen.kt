@@ -8,14 +8,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import br.com.ale.valorantapp.ui.screens.agentsList.components.Content
 import br.com.ale.valorantapp.ui.screens.agentsList.components.Header
 import br.com.ale.valorantapp.ui.shared.CustomTextField
 import br.com.ale.valorantapp.ui.theme.Gray300
+import br.com.ale.valorantapp.utils.Routes
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AgentsListScreen(agentsViewModel: AgentViewModel = koinViewModel()) {
+fun AgentsListScreen(agentsViewModel: AgentViewModel = koinViewModel(), navController: NavHostController? = null) {
     LaunchedEffect(Unit) {
         agentsViewModel.fetchAgents()
     }
@@ -36,7 +38,9 @@ fun AgentsListScreen(agentsViewModel: AgentViewModel = koinViewModel()) {
                     searchValue.value = value
                 },
             )
-            Content(agents)
+            Content(agents, onClickItem = {
+                navController!!.navigate(Routes.AGENT_DETAILS)
+            })
         }
     }
 }

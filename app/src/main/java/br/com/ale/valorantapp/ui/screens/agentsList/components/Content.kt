@@ -7,11 +7,11 @@ import androidx.compose.runtime.Composable
 import br.com.ale.valorantapp.models.AgentsModel
 
 @Composable
-fun Content(agents: List<AgentsModel>) {
+fun Content(agents: List<AgentsModel>, onClickItem: () -> Unit) {
     if (agents.isEmpty()) return CircularProgressIndicator() else
         LazyColumn {
             items(agents) { agent ->
-                AgentItem(agent)
+                AgentItem(agent, onClickItem)
             }
         }
 }
