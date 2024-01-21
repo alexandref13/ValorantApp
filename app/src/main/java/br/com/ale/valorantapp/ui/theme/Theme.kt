@@ -7,7 +7,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
@@ -16,11 +15,17 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    background = Gray300,
+    background = Gray500,
     onBackground = Gray700,
     primary = BlueDark,
-    secondary = Gray500,
+    secondary = Gray300,
+)
 
+private val lightColorScheme = darkColorScheme(
+    background = Gray500,
+    onBackground = Gray700,
+    primary = BlueDark,
+    secondary = Gray300,
 )
 
 @Composable
@@ -37,7 +42,7 @@ fun ValorantAppTheme(
         }
 
         darkTheme -> DarkColorScheme
-        else -> DarkColorScheme
+        else -> lightColorScheme
     }
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -50,7 +55,7 @@ fun ValorantAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = typography,
         content = content
     )
 }

@@ -2,20 +2,20 @@ package br.com.ale.valorantapp.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.googlefonts.Font
+import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.unit.sp
 import br.com.ale.valorantapp.config.provider
 
-val fontName = GoogleFont("Inter")
+val fontName = GoogleFont("Roboto")
 
 val fontFamily = FontFamily(
     Font(googleFont = fontName, fontProvider = provider)
 )
 
-val Typography = Typography(
+val typography = Typography(
     bodySmall = TextStyle(
         fontFamily = fontFamily,
         fontSize = 12.sp,
