@@ -16,7 +16,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,16 +37,20 @@ import org.koin.androidx.compose.koinViewModel
 fun AgentsListScreen(
     agentsViewModel: AgentViewModel = koinViewModel(), onNavigate: (UiEvent.Navigate) -> Unit
 ) {
+    val state = agentsViewModel.state
+    val searchValue = agentsViewModel.searchValue
+
     LaunchedEffect(Unit) {
         agentsViewModel.fetchAgents()
     }
 
     LaunchedEffect(agentsViewModel.searchValue.value) {
-        agentsViewModel.filterAgents()
+        if(searchValue.value.text.isNotEmpty()){
+            agentsViewModel.filterAgents()
+        }
     }
 
-    val agents = agentsViewModel.filteredAgents.collectAsState().value
-    val searchValue = agentsViewModel.searchValue
+
 
     Scaffold(topBar = {
         TopAppBar(
@@ -73,25 +76,38 @@ fun AgentsListScreen(
             },
         )
     }, containerColor = Gray300) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-            if (agents.isEmpty() && searchValue.value.text.isEmpty()) {
+        when (state.value) {
+            is AgentsViewState.Loading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator()
                 }
-            } else {
-                CustomTextField(
-                    value = searchValue.value,
-                    onValueChange = { value ->
-                        searchValue.value = value
-                    },
-                )
-                Content(agents, onClickItem = {
-                    onNavigate(UiEvent.Navigate(Routes.AGENT_DETAILS))
-                })
+            }
+
+            is AgentsViewState.Success -> {
+                Column(modifier = Modifier.padding(innerPadding)) {
+
+                    CustomTextField(
+                        value = searchValue.value,
+                        onValueChange = { value ->
+                            searchValue.value = value
+                        },
+                    )
+                    Content((state.value as AgentsViewState.Success).agents, onClickItem = {
+                        onNavigate(UiEvent.Navigate(Routes.AGENT_DETAILS))
+                    })
+                }
+
+            }
+
+            is AgentsViewState.Error -> Box(
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+            ) {
+                Text("Algo deu errado, reinicie o APP")
             }
         }
     }
 }
+
 
 @Preview
 @Composable

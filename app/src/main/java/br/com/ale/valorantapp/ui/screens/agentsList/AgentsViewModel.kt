@@ -2,23 +2,22 @@ package br.com.ale.valorantapp.ui.screens.agentsList
 
 import android.util.Log
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.ale.valorantapp.models.AgentsModel
 import br.com.ale.valorantapp.repositories.ValorantRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
 
 class AgentViewModel(private val valorantRepository: ValorantRepository) : ViewModel() {
-    private val _agents = MutableStateFlow(emptyList<AgentsModel>())
+    private val _agents = mutableStateOf(emptyList<AgentsModel>())
 
-    private val _filteredAgents = MutableStateFlow(emptyList<AgentsModel>())
-    val filteredAgents: StateFlow<List<AgentsModel>> = _filteredAgents.asStateFlow()
+    private val _state = mutableStateOf<AgentsViewState>(AgentsViewState.Loading)
+    val state: State<AgentsViewState> = _state
 
     private var _searchValue = mutableStateOf(TextFieldValue(""))
     val searchValue: MutableState<TextFieldValue> = _searchValue
@@ -26,13 +25,15 @@ class AgentViewModel(private val valorantRepository: ValorantRepository) : ViewM
 
     fun fetchAgents() {
         viewModelScope.launch {
+            _state.value = AgentsViewState.Loading
             try {
+                delay(2000)
                 val response = valorantRepository.getAgents()
 
                 Log.i("RESPONSE_GET_AGENTS", "AQ")
 
                 _agents.value = response
-                _filteredAgents.value = response
+                _state.value = AgentsViewState.Success(response)
             } catch (e: Exception) {
                 Log.d("EXC", "FetchAgents: ${e.message.toString()}")
             }
@@ -40,8 +41,10 @@ class AgentViewModel(private val valorantRepository: ValorantRepository) : ViewM
     }
 
     fun filterAgents() {
+        _state.value = AgentsViewState.Loading
+
         if (searchValue.value.text.trim().isEmpty()) {
-            _filteredAgents.value = _agents.value
+            _state.value = AgentsViewState.Success(_agents.value)
 
             return
         }
@@ -52,6 +55,6 @@ class AgentViewModel(private val valorantRepository: ValorantRepository) : ViewM
                     Locale.ROOT
                 )
             }
-        _filteredAgents.value = filter
+        _state.value = AgentsViewState.Success(filter)
     }
 }

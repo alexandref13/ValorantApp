@@ -31,7 +31,7 @@ fun Navigation() {
     ) {
         composable(Routes.AGENTS_LIST) {
             AgentsListScreen(onNavigate = {
-//                navController.navigate(it.route)
+                navController.navigate(it.route)
             })
         }
         composable(Routes.AGENT_DETAILS) {
