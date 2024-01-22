@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.ale.valorantapp.models.AgentsModel
 import br.com.ale.valorantapp.repositories.ValorantRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -27,7 +26,6 @@ class AgentViewModel(private val valorantRepository: ValorantRepository) : ViewM
         viewModelScope.launch {
             _state.value = AgentsViewState.Loading
             try {
-                delay(2000)
                 val response = valorantRepository.getAgents()
 
                 Log.i("RESPONSE_GET_AGENTS", "AQ")

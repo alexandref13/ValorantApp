@@ -12,11 +12,12 @@ class AgentDetailsViewModel(private val valorantRepository: ValorantRepository) 
 
     private val _state =  mutableStateOf<AgentDetailsState>(AgentDetailsState.Loading)
     val state: State<AgentDetailsState> = _state
-    fun fetchAgentById() {
+
+    fun fetchAgentById(id: String) {
         viewModelScope.launch {
             try {
                 val response =
-                    valorantRepository.getAgentById("e370fa57-4757-3604-3648-499e1f642d3f")
+                    valorantRepository.getAgentById(id)
 
                 _state.value = AgentDetailsState.Success(
                     response

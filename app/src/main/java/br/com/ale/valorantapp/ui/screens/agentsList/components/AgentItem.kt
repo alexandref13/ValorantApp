@@ -21,32 +21,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import br.com.ale.composefirstapp.utils.UiEvent
 import br.com.ale.valorantapp.models.AgentsModel
 import br.com.ale.valorantapp.ui.theme.BlueDark
 import br.com.ale.valorantapp.ui.theme.typography
+import br.com.ale.valorantapp.utils.Routes
 import coil.compose.AsyncImage
 
 @Composable
-fun AgentItem(agent: AgentsModel,  onClickItem: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp, horizontal = 16.dp)
-            .background(
-                BlueDark,
-                shape = RoundedCornerShape(
-                    topEnd = 8.dp,
-                    topStart = 8.dp,
-                    bottomEnd = 8.dp,
-                    bottomStart = 8.dp
-                )
-            ).clickable{
-                onClickItem()
-            }
-    ) {
+fun AgentItem(agent: AgentsModel, onClickItem: (UiEvent.Navigate) -> Unit) {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(vertical = 8.dp, horizontal = 16.dp)
+        .background(
+            BlueDark, shape = RoundedCornerShape(
+                topEnd = 8.dp, topStart = 8.dp, bottomEnd = 8.dp, bottomStart = 8.dp
+            )
+        )
+        .clickable {
+            onClickItem(UiEvent.Navigate("${Routes.AGENT_DETAILS}/${agent.uuid}"))
+        }) {
         Row(
-            modifier = Modifier.padding(16.dp),
-            horizontalArrangement = Arrangement.Center
+            modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.Center
         ) {
             AsyncImage(
                 model = agent.displayIcon,
@@ -55,8 +51,7 @@ fun AgentItem(agent: AgentsModel,  onClickItem: () -> Unit) {
             )
             Spacer(modifier = Modifier.width(8.dp))
             Column(
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Center
+                horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center
             ) {
                 Text(agent.displayName, style = typography.bodyLarge.copy(color = Color.White))
                 Spacer(modifier = Modifier.height(4.dp))

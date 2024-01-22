@@ -14,17 +14,26 @@ import br.com.ale.valorantapp.ui.theme.Gray300
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AgentDetailsScreen(agentDetailsViewModel: AgentDetailsViewModel = koinViewModel()) {
+fun AgentDetailsScreen(
+    agentDetailsViewModel: AgentDetailsViewModel = koinViewModel(),
+    agentId: String?
+) {
     val state by agentDetailsViewModel.state
 
     LaunchedEffect(Unit) {
-        agentDetailsViewModel.fetchAgentById()
+        if (agentId != null) {
+            agentDetailsViewModel.fetchAgentById(id = agentId)
+        } else
+            agentDetailsViewModel.fetchAgentById(id = "")
+
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = Gray300) {
         when (state) {
             is AgentDetailsState.Loading -> CircularProgressIndicator()
-            is AgentDetailsState.Success -> Column {}
+            is AgentDetailsState.Success -> Column {
+                Text((state as AgentDetailsState.Success).agents.displayName)
+            }
             is AgentDetailsState.Error -> Text("Error")
         }
     }
@@ -34,5 +43,5 @@ fun AgentDetailsScreen(agentDetailsViewModel: AgentDetailsViewModel = koinViewMo
 @Preview
 @Composable
 fun Main() {
-    AgentDetailsScreen()
+    AgentDetailsScreen(agentId = "")
 }

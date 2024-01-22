@@ -29,7 +29,6 @@ import br.com.ale.valorantapp.ui.shared.CustomTextField
 import br.com.ale.valorantapp.ui.theme.Gray300
 import br.com.ale.valorantapp.ui.theme.Gray500
 import br.com.ale.valorantapp.ui.theme.typography
-import br.com.ale.valorantapp.utils.Routes
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -92,9 +91,7 @@ fun AgentsListScreen(
                             searchValue.value = value
                         },
                     )
-                    Content((state.value as AgentsViewState.Success).agents, onClickItem = {
-                        onNavigate(UiEvent.Navigate(Routes.AGENT_DETAILS))
-                    })
+                    Content((state.value as AgentsViewState.Success).agents, onNavigate)
                 }
 
             }
