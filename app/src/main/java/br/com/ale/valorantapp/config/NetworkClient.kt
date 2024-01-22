@@ -1,12 +1,10 @@
 package br.com.ale.valorantapp.config
 
 import br.com.ale.valorantapp.services.ValorantService
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 private const val BASE_URL = "https://valorant-api.com/v1/"
-
 
 fun provideRetrofit(): Retrofit {
     return Retrofit.Builder()

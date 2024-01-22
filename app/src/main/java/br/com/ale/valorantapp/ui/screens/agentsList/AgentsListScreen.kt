@@ -74,7 +74,7 @@ fun AgentsListScreen(
         )
     }, containerColor = Gray300) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            if (agents.isEmpty()) {
+            if (agents.isEmpty() && searchValue.value.text.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator()
                 }
