@@ -53,7 +53,15 @@ fun AgentItem(agent: AgentsModel, onClickItem: (UiEvent.Navigate) -> Unit) {
             Column(
                 horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center
             ) {
-                Text(agent.displayName, style = typography.bodyLarge.copy(color = Color.White))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(agent.displayName, style = typography.bodyLarge.copy(color = Color.White))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    AsyncImage(
+                        model = agent.role.displayIcon,
+                        contentDescription = "Agent Image",
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     agent.description,

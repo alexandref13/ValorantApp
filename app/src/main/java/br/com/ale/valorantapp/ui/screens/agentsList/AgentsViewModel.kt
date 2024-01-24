@@ -30,8 +30,12 @@ class AgentViewModel(private val valorantRepository: ValorantRepository) : ViewM
 
                 Log.i("RESPONSE_GET_AGENTS", "AQ")
 
-                _agents.value = response
-                _state.value = AgentsViewState.Success(response)
+                val resposeSorted = response.sortedBy {
+                    it.displayName
+                }
+
+                _agents.value = resposeSorted
+                _state.value = AgentsViewState.Success(resposeSorted)
             } catch (e: Exception) {
                 Log.d("EXC", "FetchAgents: ${e.message.toString()}")
             }
