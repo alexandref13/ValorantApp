@@ -40,7 +40,10 @@ fun Navigation() {
             Routes.AGENT_DETAILS + "/{id}",
             arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) {
-            AgentDetailsScreen(agentId = it.arguments?.getString("id"))
+            AgentDetailsScreen(
+                agentId = it.arguments?.getString("id"),
+                navigateController = navController
+            )
         }
     }
 }
