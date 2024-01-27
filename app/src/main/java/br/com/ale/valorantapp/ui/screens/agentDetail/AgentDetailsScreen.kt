@@ -55,7 +55,7 @@ fun AgentDetailsScreen(
 
             is AgentDetailsState.Success -> {
                 Column(modifier = Modifier.padding(innerPadding)) {
-
+                    Spacer(modifier = Modifier.height(16.dp))
                     AgentDetailComponent((state.value as AgentDetailsState.Success).agents)
                     Spacer(modifier = Modifier.height(32.dp))
 
