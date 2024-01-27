@@ -1,4 +1,4 @@
-package br.com.ale.valorantapp.repositories
+package br.com.ale.valorantapp.repositories.valorant
 
 import br.com.ale.valorantapp.models.AgentsModel
 

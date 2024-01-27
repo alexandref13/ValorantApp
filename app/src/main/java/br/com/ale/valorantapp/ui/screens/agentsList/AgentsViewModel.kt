@@ -8,7 +8,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.ale.valorantapp.models.AgentsModel
-import br.com.ale.valorantapp.repositories.ValorantRepository
+import br.com.ale.valorantapp.repositories.valorant.ValorantRepository
 import kotlinx.coroutines.launch
 import java.util.Locale
 

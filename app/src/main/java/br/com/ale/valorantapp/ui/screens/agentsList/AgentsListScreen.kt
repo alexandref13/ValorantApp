@@ -20,7 +20,6 @@ import br.com.ale.valorantapp.ui.shared.CustomTopBar
 import br.com.ale.valorantapp.ui.theme.Gray300
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgentsListScreen(
     agentsViewModel: AgentViewModel = koinViewModel(), onNavigate: (UiEvent.Navigate) -> Unit
@@ -33,7 +32,7 @@ fun AgentsListScreen(
     }
 
     LaunchedEffect(agentsViewModel.searchValue.value) {
-        if(searchValue.value.text.isNotEmpty()){
+        if (searchValue.value.text.isNotEmpty()) {
             agentsViewModel.filterAgents()
         }
     }
@@ -52,7 +51,6 @@ fun AgentsListScreen(
 
             is AgentsViewState.Success -> {
                 Column(modifier = Modifier.padding(innerPadding)) {
-
                     CustomTextField(
                         value = searchValue.value,
                         onValueChange = { value ->
@@ -69,6 +67,7 @@ fun AgentsListScreen(
             ) {
                 Text("Algo deu errado, reinicie o APP")
             }
+
         }
     }
 }

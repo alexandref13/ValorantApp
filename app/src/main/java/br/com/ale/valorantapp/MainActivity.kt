@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import br.com.ale.valorantapp.ui.screens.agentDetail.AgentDetailsScreen
 import br.com.ale.valorantapp.ui.screens.agentsList.AgentsListScreen
+import br.com.ale.valorantapp.ui.screens.favoritesagents.FavoriteAgentsScreen
 import br.com.ale.valorantapp.ui.theme.ValorantAppTheme
 import br.com.ale.valorantapp.utils.Routes
 
@@ -35,6 +36,12 @@ fun Navigation() {
             AgentsListScreen(onNavigate = {
                 navController.navigate(it.route)
             })
+        }
+
+        composable(
+            Routes.FAVORITE_AGENTS,
+        ) {
+            FavoriteAgentsScreen(navigateController = navController)
         }
         composable(
             Routes.AGENT_DETAILS + "/{id}",

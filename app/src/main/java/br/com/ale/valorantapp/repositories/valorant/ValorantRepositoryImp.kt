@@ -1,6 +1,7 @@
-package br.com.ale.valorantapp.repositories
+package br.com.ale.valorantapp.repositories.valorant
 
 import br.com.ale.valorantapp.models.AgentsModel
+import br.com.ale.valorantapp.repositories.valorant.ValorantRepository
 import br.com.ale.valorantapp.services.ValorantService
 
 class ValorantRepositoryImp(private val valorantService: ValorantService) : ValorantRepository {
