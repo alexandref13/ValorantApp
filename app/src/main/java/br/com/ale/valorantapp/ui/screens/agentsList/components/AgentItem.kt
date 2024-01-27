@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -47,7 +46,7 @@ fun AgentItem(
         favoriteAgentsViewModel.favoriteAgents.collectAsState(initial = emptyList())
 
     fun isAgentFavorite(): Boolean {
-        var agentIsFavorite = false;
+        var agentIsFavorite = false
         favoriteAgents.value.forEach {
             if (it.agentId == agent.uuid) {
                 agentIsFavorite = true
@@ -56,7 +55,7 @@ fun AgentItem(
 
         Log.i("HAS_FAVORITE_AGENT", agentIsFavorite.toString())
 
-        return agentIsFavorite;
+        return agentIsFavorite
     }
 
     val iconStarColor = if (isAgentFavorite()) {
@@ -77,7 +76,9 @@ fun AgentItem(
             onClickItem(UiEvent.Navigate("${Routes.AGENT_DETAILS}/${agent.uuid}"))
         }) {
         Row(
-            modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.Center
+            modifier = Modifier.padding(8.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
                 model = agent.displayIcon,
@@ -86,15 +87,14 @@ fun AgentItem(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Column(
-                horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center
+                modifier = Modifier.padding(bottom = 8.dp), verticalArrangement = Arrangement.Center
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Row(
-                    ) {
+                    Row {
                         Text(
                             agent.displayName,
                             style = typography.bodyLarge.copy(color = Color.White)
@@ -108,10 +108,16 @@ fun AgentItem(
                     }
 
                     IconButton(onClick = {
-                        var isAgentFavorite = isAgentFavorite()
+                        val isAgentFavorite = isAgentFavorite()
 
                         if (isAgentFavorite) {
-                            // TODO -> DELETE FAVORITE
+                            val filteredFavoriteAgents =
+                                favoriteAgents.value.filter { favoriteAgent ->
+                                    favoriteAgent.agentId == agent.uuid
+                                }
+
+                            favoriteAgentsViewModel.deleteFavoriteAgent(filteredFavoriteAgents.first())
+
                         } else {
                             favoriteAgentsViewModel.addFavoriteAgent(agent)
                         }
@@ -124,7 +130,6 @@ fun AgentItem(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     agent.description,
                     textAlign = TextAlign.Justify,
