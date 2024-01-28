@@ -1,6 +1,5 @@
 package br.com.ale.valorantapp.ui.screens.agentsList.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +31,8 @@ import br.com.ale.valorantapp.ui.screens.favoritesagents.FavoriteAgentsViewModel
 import br.com.ale.valorantapp.ui.theme.BlueDark
 import br.com.ale.valorantapp.ui.theme.typography
 import br.com.ale.valorantapp.utils.Routes
+import br.com.ale.valorantapp.utils.favoriteOrUnfavoriteAgent
+import br.com.ale.valorantapp.utils.iconStarColor
 import coil.compose.AsyncImage
 import org.koin.androidx.compose.koinViewModel
 
@@ -44,25 +45,6 @@ fun AgentItem(
 
     val favoriteAgents =
         favoriteAgentsViewModel.favoriteAgents.collectAsState(initial = emptyList())
-
-    fun isAgentFavorite(): Boolean {
-        var agentIsFavorite = false
-        favoriteAgents.value.forEach {
-            if (it.agentId == agent.uuid) {
-                agentIsFavorite = true
-            }
-        }
-
-        Log.i("HAS_FAVORITE_AGENT", agentIsFavorite.toString())
-
-        return agentIsFavorite
-    }
-
-    val iconStarColor = if (isAgentFavorite()) {
-        Color.Yellow
-    } else {
-        Color.Black
-    }
 
     Box(modifier = Modifier
         .fillMaxWidth()
@@ -108,25 +90,19 @@ fun AgentItem(
                     }
 
                     IconButton(onClick = {
-                        val isAgentFavorite = isAgentFavorite()
-
-                        if (isAgentFavorite) {
-                            val filteredFavoriteAgents =
-                                favoriteAgents.value.filter { favoriteAgent ->
-                                    favoriteAgent.agentId == agent.uuid
-                                }
-
-                            favoriteAgentsViewModel.deleteFavoriteAgent(filteredFavoriteAgents.first())
-
-                        } else {
-                            favoriteAgentsViewModel.addFavoriteAgent(agent)
-                        }
-
+                        favoriteOrUnfavoriteAgent(
+                            favoriteAgents = favoriteAgents.value,
+                            agent = agent,
+                            favoriteAgentsViewModel = favoriteAgentsViewModel
+                        )
                     }) {
                         Icon(
                             Icons.Default.Star,
                             "Star Icon",
-                            tint = iconStarColor,
+                            tint = iconStarColor(
+                                favoriteAgents = favoriteAgents.value,
+                                agent = agent
+                            ),
                         )
                     }
                 }
