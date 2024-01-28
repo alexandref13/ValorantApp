@@ -53,7 +53,7 @@ class AgentViewModel(private val valorantRepository: ValorantRepository) : ViewM
 
         val filter =
             _agents.value.filter { agent ->
-                searchValue.value.text in agent.displayName.lowercase(
+                searchValue.value.text.lowercase() in agent.displayName.lowercase(
                     Locale.ROOT
                 )
             }
