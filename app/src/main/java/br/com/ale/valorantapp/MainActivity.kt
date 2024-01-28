@@ -107,7 +107,12 @@ fun Navigation(navController: NavHostController) {
         composable(
             Routes.FAVORITE_AGENTS,
         ) {
-            FavoriteAgentsScreen(navigateController = navController)
+            FavoriteAgentsScreen(
+                navigateController = navController,
+                onNavigate = {
+                    navController.navigate(it.route)
+                }
+            )
         }
 
         composable(
