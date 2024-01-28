@@ -29,7 +29,7 @@ fun FavoriteAgentsScreen(
 
     Scaffold(
         topBar = {
-            CustomTopBar(title = "FavoriteScreen", hasIconArrowBack = true, onClickIconArrowBack = {
+            CustomTopBar(title = "Favorite Agents", hasIconArrowBack = true, onClickIconArrowBack = {
                 navigateController.popBackStack()
             })
         },
