@@ -24,14 +24,12 @@ class FavoriteAgentsViewModel(private val favoriteAgentsRepository: FavoriteAgen
                     .displayName
             )
             favoriteAgentsRepository.addFavoriteAgent(favoriteAgentEntity)
-
         }
     }
 
-    fun deleteFavoriteAgent(favoriteAgentEntity: FavoriteAgentEntity){
+    fun deleteFavoriteAgent(favoriteAgentEntity: FavoriteAgentEntity) {
         viewModelScope.launch {
             favoriteAgentsRepository.deleteFavoriteAgent(favoriteAgentEntity)
         }
     }
-
 }

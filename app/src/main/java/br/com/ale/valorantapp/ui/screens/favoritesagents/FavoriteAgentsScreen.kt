@@ -1,6 +1,5 @@
 package br.com.ale.valorantapp.ui.screens.favoritesagents
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,7 +34,7 @@ fun FavoriteAgentsScreen(
             })
         },
         containerColor = Gray300
-    ) {
+    ) { it ->
         Column(
             modifier = Modifier
                 .padding(it)
@@ -44,7 +43,9 @@ fun FavoriteAgentsScreen(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(favoriteAgents.value) { favorite ->
+                items(favoriteAgents.value.sortedBy { agent ->
+                    agent.name
+                }) { favorite ->
                     FavoriteAgentItem(favoriteAgent = favorite, onClickItem = onNavigate)
                 }
             }
